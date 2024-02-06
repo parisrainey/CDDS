@@ -2,12 +2,29 @@
 #include <iostream>
 
 //Node();
-template<typename T>
+template<typename AnyType>
 struct Node
 {
-	Node<T>();
+	Node();
+	Node(AnyType value);
 
-	T data;
-
-	Node
+	Node<AnyType>* next;
+	Node<AnyType>* previous;
+	
+	AnyType data;
 };
+
+template<typename AnyType>
+inline Node<AnyType>::Node()
+{
+	next = nullptr;
+	previous = nullptr;
+}
+
+template<typename AnyType>
+inline Node<AnyType>::Node(AnyType newData)
+{
+	next = nullptr;
+	previous = nullptr;
+	data = newData;
+}
