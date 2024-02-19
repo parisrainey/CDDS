@@ -37,7 +37,7 @@ inline Iterator<AnyType> Iterator<AnyType>::operator++()
 {
 	if (!m_current)
 		return Iterator<AnyType>(m_current);
-	return =Iterator<AnyType>(m_current->next);
+	return Iterator<AnyType>(m_current->next);
 }
 
 template<typename AnyType>

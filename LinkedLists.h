@@ -74,7 +74,15 @@ template<typename AnyType>
 inline void LinkedList<AnyType>::destroy()
 {
 	//deletes all nodes in the LinkedList
-	delete this;
+	if (m_nodeCount == 0)
+		return;
+
+	for (int i = 0; i < m_nodeCount; i++)
+	{
+		popBack();
+	}
+
+	intialize();
 }
 
 template<typename AnyType>
@@ -165,15 +173,46 @@ inline void LinkedList<AnyType>::pushBack(const AnyType& value)
 template<typename AnyType>
 inline AnyType LinkedList<AnyType>::popFront()
 {
-	//removes the node at the beginning of the Linked list and returns the value
-	return AnyType();
+	//If the list is empty return default value.
+	if (m_nodeCount == 0)
+		return AnyType();
+	//Store the data in the node to remove.
+	AnyType value = m_first->data;
+	//Make firsts previous first
+	m_first = m_first->next;
+	//If first has a previous delete it
+	if (m_first->previous)
+	{
+		delete m_first->previous;
+		m_first->previous = nullptr;
+	}
+
+	m_nodeCount--;
+	//Give back the value in the old last node
+	return value;
 }
 
 template<typename AnyType>
 inline AnyType LinkedList<AnyType>::popBack()
 {
-	//removes the node at the end of the LinkedList and returns the value
-	return AnyType();
+	//If the list is empty return default value.
+	if (m_nodeCount == 0)
+		return AnyType();
+
+	//Store the data in the node to remove.
+	AnyType value = m_last->data;
+	//Mark the second to last node as the last.
+	m_last = m_last->previous;
+	//If the last node has a next delete it.
+	if (m_last->next)
+	{
+		delete m_last->next;
+		m_last->next = nullptr;
+	}
+
+	m_nodeCount--;
+	//Give back the value in the old last node.
+	return value
 }
 
 template<typename AnyType>
@@ -254,7 +293,9 @@ inline void LinkedList<AnyType>::intialize()
 {
 	//set the default values for the first node pointer, 
 	// the last node pointer, and the node count
-
+	m_nodeCount = 0;
+	m_first = nullptr;
+	m_last = nullptr;
 }
 
 template<typename AnyType>
